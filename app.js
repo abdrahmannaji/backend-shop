@@ -46,11 +46,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // // File uploading
-// app.use(
-//   fileupload({
-//     createParentPath: true,
-// })
-// )
+app.use(
+  fileupload({
+    createParentPath: true,
+})
+)
 
 app.use(bodyParser.json())
 

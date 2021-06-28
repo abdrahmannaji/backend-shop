@@ -100,6 +100,6 @@ node run dev
 
 This project is licensed under the MIT License
 
-## Developed by Reagan Ekhameye (Tech Reagan)
+## Developed by Abdalrhmn Naji
 
-Reach me on twitter [@techreagan](https://www.twitter.com/techreagan)
+Reach me on facebook [@Abdalrhmn](https://www.facebook.com/profile.php?id=100011260472575)
