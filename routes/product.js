@@ -1,7 +1,9 @@
 
 const router = require('express').Router();
 const store = require('../middleware/multer')
-const controller = require('../controllers/controller');
+const Authtoken = require('../middleware/Authtoken')
+
+
 const { protect, authorize } = require('../middleware/auth')
 const { 
     createProduct,
@@ -11,11 +13,17 @@ const {
     updateProduct,
     deleteProduct,
 } = require('../controllers/product');
-router.post('/upload',store.array('images', 12),controller.uploads);
- 
-router.post('/',store.array('images', 12),  createProduct);
+const Product = require('../models/Product')
 
-router.get('/', protect,getProducts);
+const advancedResults = require('../middleware/advancedResults')
+ 
+router.post('/',store.array('images', 12),Authtoken,
+// protect, authorize('admin'), 
+ createProduct);
+
+router.get('/',protect,
+authorize('admin'),  advancedResults(Product),
+getProducts);
 router.get('/shop/:id',getShopProducts);
 router.get('/:id', getProductById);
 router.put('/:id',updateProduct);

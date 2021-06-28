@@ -53,7 +53,7 @@ module.exports = {
       
           product = await Product.create({
               name,
-              shop_id: req.user._id,
+              shop_id: shopid.id,
               type_phone,
               phone_size,
               phone_Weight,
@@ -69,30 +69,16 @@ module.exports = {
               category,
               rating_avg,
               description,
-            // img:fan,
+            img:fan,
               approved_by
           })
           res
               .status(200)
               .json({ success: true, product: product });
       },
-    getProducts: (req, res) => {
-        getProducts((err, results) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            if (!results) {
-                return res.json({
-                    success: 0,
-                    message: 'No Product found'
-                });
-            }
-            return res.json(
-                results
-            );
-        });
-    },
+    getProducts:asyncHandler(async (req, res, next) => {
+        res.status(200).json(res.advancedResults)
+      }),
     getShopProducts: (req, res) => {
         const id = req.params.id;
         getShopProducts(id, (err, results) => {

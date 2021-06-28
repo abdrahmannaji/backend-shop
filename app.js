@@ -26,12 +26,9 @@ const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/users')
 const shopRoutes = require('./routes/shops')
 const categoryRoutes = require('./routes/categories')
-const videoRoutes = require('./routes/videos')
 const commentRoutes = require('./routes/comments')
 const replyRoutes = require('./routes/replies')
-const feelingRoutes = require('./routes/feelings')
 const subscriptionRoutes = require('./routes/subscriptions')
-const historiesRoutes = require('./routes/histories')
 const searchRoutes = require('./routes/search')
 const ProdauctItem = require('./routes/productItem')
 const productRoutes = require('./routes/product')
@@ -48,12 +45,12 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
 
-// File uploading
-app.use(
-  fileupload({
-    createParentPath: true
-  })
-)
+// // File uploading
+// app.use(
+//   fileupload({
+//     createParentPath: true,
+// })
+// )
 
 app.use(bodyParser.json())
 
@@ -76,7 +73,7 @@ const limiter = rateLimit({
 })
 
 // app.use(limiter)
-
+// 
 // Prevent http param pollution
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(hpp())
@@ -90,17 +87,16 @@ app.use(versionOne('auth'), authRoutes)
 app.use(versionOne('users'), userRoutes)
 app.use(versionOne('shops'), shopRoutes)
 app.use(versionOne('categories'), categoryRoutes)
-app.use(versionOne('videos'), videoRoutes)
 app.use(versionOne('comments'), commentRoutes)
 app.use(versionOne('replies'), replyRoutes)
-app.use(versionOne('feelings'), feelingRoutes)
 app.use(versionOne('subscriptions'), subscriptionRoutes)
-app.use(versionOne('histories'), historiesRoutes)
 app.use(versionOne('prodauctItem'), ProdauctItem)
 app.use(versionOne('product'), productRoutes)
 app.use(versionOne('search'), searchRoutes)
 
-
+app.get("/", (req, res) => {
+  res.send("النظام شغال")
+});
 
 app.use(errorHandler)
 

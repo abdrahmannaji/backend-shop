@@ -51,10 +51,7 @@ var Product = new Schema({
     type: String,
     required: false
   },
-  img:{
-    type: String,
-    required: false
-  },
+  img:[],
   quantity: {
     type: Number,
     default:0,

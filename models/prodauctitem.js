@@ -11,7 +11,7 @@ const ProductItem = new Schema(
         
 
 
-       phone: {
+phone: {
           
            names:{
             id:Number,
