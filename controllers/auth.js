@@ -51,13 +51,13 @@ process.nextTick(async () => {
 
 
 exports.register = asyncHandler(async (req, res, next) => {
-  let { channelName, lName, email, password, user_type, address, phone, photoUrl, shopCasingimage, country, city, } = req.body
+  let { fName, lName, email, password, user_type, address, phone, photoUrl, shopCasingimage, country, city, } = req.body
 
   email = email.toLowerCase()
 
   user = await User.create({
     user_type,
-    channelName,
+    fName,
     lName,
     email,
     password,
@@ -168,7 +168,7 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.updateDetails = asyncHandler(async (req, res, next) => {
   const fieldsToUpdate = {
-    channelName: req.body.channelName,
+    fName: req.body.fName,
     email: req.body.email.toLowerCase()
   }
   const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {

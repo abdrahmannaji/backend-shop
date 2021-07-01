@@ -26,9 +26,5 @@ router
   .put(protect, authorize('admin'), updateUser)
   .delete(protect, authorize('admin'), deleteUser)
 
-router
-  .route('/:id/videos')
-  .get(getVideosByUserId)
-
 
 module.exports = router

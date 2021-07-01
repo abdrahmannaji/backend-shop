@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
 
-// // File uploading
+// File uploading
 app.use(
   fileupload({
     createParentPath: true,

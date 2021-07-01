@@ -6,7 +6,7 @@ const {
     register,
     createShop,
     updateShop,
-    getVideosByShopId,
+
     deleteShop
 } = require('../controllers/shops')
 
@@ -21,22 +21,21 @@ const { protect, authorize } = require('../middleware/auth')
 
 
 
-router.route('/register').post(protect,authorize('admin'),register)
+// router.route('/register').post(protect,authorize('admin'),register)
 router
     .route('/')
-    .get(advancedResults(Shop), getShops)
+    // .get(advancedResults(Shop), getShops)
     .post(createShop)
 
 router.route('/createShop').post(createShop)
 router
+    .route('/getShop')
+    .get(protect,authorize('admin'),getShop)
+router
     .route('/:id')
-    .get(getShop)
     .put(updateShop)
     .delete(deleteShop)
 
-router
-    .route('/:id/videos')
-    .get(getVideosByShopId)
 
 
 module.exports = router

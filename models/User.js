@@ -9,7 +9,7 @@ const Schema = mongoose.Schema
 
 const UserSchema = new Schema(
   {
-    channelName: {
+    fName: {
       type: String,
       required: [true, 'Please add a channel name'],
       unique: true,
@@ -31,37 +31,32 @@ const UserSchema = new Schema(
         'Please add a valid email'
       ]
     },
-    photoUrl: {
-      type: String,
-      default: 'assets/images/Logo MaxSport.png'
-    },
-    shopCasingimage: {
-      type: String,
+    // photoUrl: {
+    //   type: String,
+    //   default: 'assets/images/Logo MaxSport.png'
+    // },
+    // shopCasingimage: {
+    //   type: String,
 
-      default: 'noImage.jpg'
-    },
-    address: {
-      type: String,
-    },
-    country: {
-      type: String,
-    },
-    city: {
-      type: String,
+    //   default: 'noImage.jpg'
+    // },
+    // address: {
+    //   type: String,
+    // },
+    // country: {
+    //   type: String,
+    // },
+    // city: {
+    //   type: String,
 
-    },
+    // },
     verification_code: {
       type: Number,
 
     },
     phone: {
       type: String,
-
     },
-    // phone2: {
-    //   type: String,
-
-    // },
     email_verified_at: {
       type: Date
     },
@@ -88,23 +83,19 @@ const UserSchema = new Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 )
 
-UserSchema.index({ channelName: 'text' })
-UserSchema.virtual('subscribers', {
-  ref: 'Subscription',
-  localField: '_id',
-  foreignField: 'channelId',
-  justOne: false,
-  count: true,
-  match: { userId: this._id }
-})
+UserSchema.index({ fName: 'text' })
 
-UserSchema.virtual('videos', {
-  ref: 'Video',
-  localField: '_id',
-  foreignField: 'userId',
-  justOne: false,
-  count: true
-})
+
+// UserSchema.virtual('subscribers', {
+//   ref: 'Subscription',
+//   localField: '_id',
+//   foreignField: 'channelId',
+//   justOne: false,
+//   count: true,
+//   match: { userId: this._id }
+// })
+
+  
 UserSchema.methods.getSignedJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE

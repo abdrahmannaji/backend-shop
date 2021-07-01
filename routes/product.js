@@ -21,8 +21,8 @@ router.post('/',store.array('images', 12),Authtoken,
 // protect, authorize('admin'), 
  createProduct);
 
-router.get('/',protect,
-authorize('admin'),  advancedResults(Product),
+router.get('/',Authtoken,
+  advancedResults(Product),
 getProducts);
 router.get('/shop/:id',getShopProducts);
 router.get('/:id', getProductById);

@@ -31,7 +31,7 @@ router
   .route('/channels')
   .get(
     advancedResults(Subscription, [
-      { path: 'channelId', select: 'photoUrl channelName' }
+      { path: 'channelId', select: 'photoUrl fName' }
     ]),
     getChannels
   )

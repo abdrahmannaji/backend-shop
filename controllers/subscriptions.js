@@ -81,6 +81,6 @@ exports.getSubscribedVideos = asyncHandler(async (req, res, next) => {
     }
   })
 
-  const populates = [{ path: 'userId', select: 'photoUrl channelName' }]
+  const populates = [{ path: 'userId', select: 'photoUrl fName' }]
   advancedResultsFunc(req, res, Video, populates, 'public', channelsId)
 })

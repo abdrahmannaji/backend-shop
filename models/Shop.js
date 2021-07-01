@@ -2,6 +2,7 @@ const crypto = require('crypto')
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const uniqueValidator = require('mongoose-unique-validator')
 const Schema = mongoose.Schema
 
 const ShopSchema = new Schema(
@@ -13,10 +14,6 @@ const ShopSchema = new Schema(
         },
         nameShop: {
             type: String,
-            required: [true, 'Please add a NameShop'],
-            unique: true,
-            uniqueCaseInsensitive: true
-
         },
         email: {
             type: String,
@@ -33,12 +30,13 @@ const ShopSchema = new Schema(
           },
         address: {
             type: String,
-            required: [true, 'Please add a Address'],
-
         },
         phone: {
             type: String,
 
+        },
+        numbershop:{
+          type: Number,
         },
         phone2: {
             type: String,
@@ -47,13 +45,9 @@ const ShopSchema = new Schema(
 
         logo: {
             type: String,
-            default: 'assets/images/Logo MaxSport.png'
+            default: 'Logo MaxSport.png'
         },
-        shopCasingimage: {
-            type: Array,
-
-            default: 'noImage.jpg'
-        },
+        shopCasingimage: [],
 
         facebook: {
             type: String,
@@ -80,24 +74,23 @@ const ShopSchema = new Schema(
         },
 
     },
-    { timestamps: true }
+    { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 
 )
-
-ShopSchema.virtual('subscribers', {
-    ref: 'Subscription',
-    localField: '_id',
-    foreignField: 'channelId',
-    justOne: false,
-    count: true,
-    match: { userId: this._id }
-  })
+ShopSchema.virtual('subscriber', {
+  ref: 'Subscription',
+  localField: '_id',
+  foreignField: 'channelId',
+  justOne: false,
+  count: true,
+  match: { shopId: this._id }
+})
   ShopSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password)
   }
 
   ShopSchema.pre('find', function () {
-    this.populate({ path: 'subscribers' })
+    this.populate({ path: 'subscriber' })
   })
   
   ShopSchema.methods.getSignedJwtToken = function () {
@@ -109,6 +102,7 @@ ShopSchema.virtual('subscribers', {
     if (!this.isModified('password')) {
       next()
     }
+    
   
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)

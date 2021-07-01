@@ -1,49 +1,44 @@
 const asyncHandler = require('../middleware/async')
-constErrorResponse = require('../utils/errorResponse')
+const ErrorResponse = require('../utils/errorResponse')
 
 const Shop = require('../models/Shop')
-const videos = require('../models/Video')
-
-const User = require('../models/User')
 exports.getShops = asyncHandler(async (req, res, next) => {
     res.status(200).json(res.advancedResults)
 })
 
 exports.getShop = asyncHandler(async (req, res, next) => {
-    const shop = await Shop.findById(req.body.userid).populate({
-        path: 'subscribers'
-    })
-
+    console.log(req.user.id);
+    const shop = await Shop.find
+    ({userid:req.user.id}).populate({
+        path: 'subscriber',})
+// مرحبانتشسلميتشبسلايبالشسنيب
     if (!Shop)
         return next(new ErrorResponse(`No Shop with that id of ${req.params.id}`))
 
-    res.status(200).json({ success: true, data: shop })
+        res.status(200).json({ success: true, data: shop })
 })
 //....count-of-videos...
-exports.getVideosByShopId = asyncHandler(async (req, res, next) => {
-    const Shopvideos = await videos.find({ ShopId: req.params.id })
+
+exports.createShop = asyncHandler(async (req, res, next) => {
+    var numbershop;
+    const shopfind = await Shop.find().select('userid')
+      
 
 
-    if (!Shopvideos) {
-        return next(
-            new ErrorResponse(
-                `No videos with that Shop id of ${req.params.ShopId}`
-            )
-        )
+        if (shopfind){
+            res.status(500).json({
+                success: false,
+               
+                error: 'Server Error'
+               
+              })
+        // return next(new ErrorResponse(`تم اضافة متجر بهذا الحساب مسبقا`))
+       
     }
 
-    res.status(200).json({ sucess: true, data: Shopvideos.length })
-})
-exports.register = asyncHandler(async (req, res, next) => {
-
-    // console.log('id' + req.user._id);
-    // const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-    // req.user = await User.findById(decoded.id).populate('subscribers')
-
     let {
-      
         email,
+        userid,
         password,
         nameShop,
         address,
@@ -59,8 +54,9 @@ exports.register = asyncHandler(async (req, res, next) => {
     } = req.body
 
     shop = await Shop.create({
-        userid: req.user._id,
+        userid,
         email,
+        numbershop:numbershop,
         password,
         nameShop,
         address,
@@ -75,15 +71,16 @@ exports.register = asyncHandler(async (req, res, next) => {
 
 
     })
-    res
-        .status(200)
-        .json({ success: true, nameShop: shop.userid });
+    res.status(200).json({ success: true, data: shop })
 }),
-    exports.createShop = asyncHandler(async (req, res, next) => {
-        const shop = await Shop.create(req.body)
-
-        res.status(201).json({ success: true, data: shop })
-    })
+    // exports.createShop = asyncHandler(async (req, res, next) => {
+        // const shopfind = await Shop.find().select('userid')
+        // console.log(shopfind);
+        // if(shopfind)
+    //     const shop = await Shop.create(req.body)
+        
+    //     res.status(200).json({ success: true, data: shop })
+    // })
 
 // @desc    Update Shop
 // @route   PUT /api/v1/auth/Shops/:id

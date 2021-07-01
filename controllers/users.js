@@ -25,20 +25,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: user })
 })
 //....count-of-videos...
-exports.getVideosByUserId = asyncHandler(async (req, res, next) => {
-  const uservideos = await videos.find({ userId: req.params.id })
 
-
-  if (!uservideos) {
-    return next(
-      new ErrorResponse(
-        `No videos with that user id of ${req.params.userId}`
-      )
-    )
-  }
-
-  res.status(200).json({ sucess: true, data: uservideos.length })
-})
 
 // @desc    Create user
 // @route   POST /api/v1/auth/users

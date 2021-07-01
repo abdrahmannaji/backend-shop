@@ -25,7 +25,7 @@ const ReplySchema = new Schema(
 ReplySchema.pre('find', function () {
   this.populate({
     path: 'userId',
-    select: 'channelName photoUrl',
+    select: 'fName photoUrl',
     sort: '+createdAt'
   })
 })

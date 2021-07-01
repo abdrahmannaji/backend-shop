@@ -69,8 +69,8 @@ module.exports = {
               category,
               rating_avg,
               description,
-            img:fan,
-              approved_by
+              img:fan,
+              approved_by:req.user.id,
           })
           res
               .status(200)
