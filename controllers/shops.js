@@ -16,7 +16,7 @@ exports.getShop = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({ success: true, data: shop })
 })
-//yemen mol
+//yemen molsaldkj
 
 exports.createShop = asyncHandler(async (req, res, next) => {
     var numbershop;

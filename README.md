@@ -7,7 +7,7 @@
 > CRUD (Create, Read, Update And Delete)
 
 - Authentication with JWT (Reset Password with email)
-  - Login (User/Admin)
+  - Login (User/saller/Admin)
   - Register
   - Forgot Password
 - Pagination and search where necessary
